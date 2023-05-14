@@ -35,4 +35,13 @@ public class EmployeeController {
     public ResponseEntity<Employee> getEmployeeById(@PathVariable("id") long employeeId) {
         return new ResponseEntity<Employee>(employeeService.getEmployeeById(employeeId), HttpStatus.OK);
     }
+
+    // build update employee REST API
+    // http://localhost:8080/api/employees/id
+    // convert JSON to Java OBJECT = using @RequestBody annotation
+    @PutMapping("{id}")
+    public ResponseEntity<Employee> updateEmployee(@PathVariable("id") long id,
+                                                   @RequestBody Employee employee) {
+        return new ResponseEntity<Employee>(employeeService.updateEmployee(employee, id), HttpStatus.OK);
+    }
 }
