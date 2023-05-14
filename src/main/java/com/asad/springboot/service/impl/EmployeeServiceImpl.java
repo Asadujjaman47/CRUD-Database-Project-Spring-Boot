@@ -48,16 +48,27 @@ public class EmployeeServiceImpl implements EmployeeService {
     public Employee updateEmployee(Employee employee, long id) {
 
         // we need to check whether employee with given id is existed in DB or not
-        Employee exisitngEmployee = employeeRepository.findById(id).orElseThrow(
+        Employee existingEmployee = employeeRepository.findById(id).orElseThrow(
                 () -> new ResourceNotFoundException("Employee", "Id", id)
         );
 
-        exisitngEmployee.setFirstName(employee.getFirstName());
-        exisitngEmployee.setLastName(employee.getLastName());
-        exisitngEmployee.setEmail(employee.getEmail());
+        existingEmployee.setFirstName(employee.getFirstName());
+        existingEmployee.setLastName(employee.getLastName());
+        existingEmployee.setEmail(employee.getEmail());
 
         // save existing employee to DB
-        employeeRepository.save((exisitngEmployee));
-        return exisitngEmployee;
+        employeeRepository.save((existingEmployee));
+        return existingEmployee;
+    }
+
+    @Override
+    public void deleteEmployee(long id) {
+
+        // check whether a employee exist in a DB or not
+        employeeRepository.findById(id).orElseThrow(
+                () -> new ResourceNotFoundException("Employee", "Id", id)
+        );
+
+        employeeRepository.deleteById(id);
     }
 }
